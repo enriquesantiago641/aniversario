@@ -253,6 +253,28 @@ button:hover {
     margin-top: 10px;
 }
 
+.video-wrapper {
+    width: min(100%, 360px);
+    aspect-ratio: 9 / 16;
+    margin: 10px auto 0;
+    overflow: hidden;
+    border-radius: 20px;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
+    background: transparent;
+}
+
+.video-player {
+    width: 100%;
+    height: 100%;
+    margin-top: 0;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    background: transparent;
+    transform: scale(1.38);
+    transform-origin: center center;
+}
+
 .heart {
     position: fixed;
     top: -40px;
@@ -348,12 +370,12 @@ button:hover {
 
     <section class="card">
         <h2>Video 🎥</h2>
-        <video class="video-player video-frame" controls>
-            <source src="video-web.mp4" type="video/mp4">
-            <source src="video.MP4" type="video/mp4">
-            Tu navegador no puede reproducir este video.
-        </video>
-        <p class="note">La página intentará usar primero video-web.mp4 y, si no funciona, usará video.MP4.</p>
+        <div class="video-wrapper">
+            <video class="video-player video-frame" controls autoplay muted playsinline loop>
+                <source src="video-25mb.mp4" type="video/mp4">
+                Tu navegador no puede reproducir este video.
+            </video>
+        </div>
     </section>
 
     <section class="card">
