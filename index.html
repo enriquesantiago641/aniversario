@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Para mi amor ❤️</title>
+
+<style>
+:root {
+    --bg-1: #cfe8ff;
+    --bg-2: #a9d4f7;
+    --card: rgba(255, 255, 255, 0.85);
+    --text: #4a2232;
+    --accent: #e63964;
+    --accent-dark: #b8254d;
+    --shadow: 0 18px 45px rgba(119, 34, 62, 0.18);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: "Trebuchet MS", "Gill Sans", sans-serif;
+    color: var(--text);
+    background:
+        radial-gradient(circle at top, rgba(255, 255, 255, 0.6), transparent 30%),
+        linear-gradient(135deg, var(--bg-1), var(--bg-2));
+}
+
+main {
+    width: min(960px, calc(100% - 32px));
+    margin: 0 auto;
+    padding: 32px 0 56px;
+    position: relative;
+    z-index: 1;
+}
+
+h1, h2 {
+    font-family: Georgia, "Times New Roman", serif;
+    margin-top: 0;
+}
+
+.hero {
+    padding: 28px;
+    text-align: center;
+}
+
+.hero p {
+    font-size: 1.08rem;
+    margin-bottom: 0;
+}
+
+.card {
+    background: var(--card);
+    backdrop-filter: blur(8px);
+    margin: 20px auto;
+    padding: 24px;
+    border-radius: 24px;
+    box-shadow: var(--shadow);
+}
+
+.note {
+    margin-top: 12px;
+    font-size: 0.95rem;
+    opacity: 0.8;
+}
+
+.gallery {
+    overflow: hidden;
+    padding: 8px 0;
+}
+
+.gallery-viewport {
+    overflow: hidden;
+    width: 100%;
+}
+
+.gallery-track {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    width: max-content;
+    animation: deslizarGaleria 40s linear infinite;
+}
+
+.gallery:hover .gallery-track {
+    animation-play-state: paused;
+}
+
+.photo-card {
+    width: 220px;
+    flex: 0 0 220px;
+    margin: 0;
+    padding: 12px;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.78);
+}
+
+.photo-card img,
+.video-frame,
+.surprise-image {
+    width: 100%;
+    border-radius: 16px;
+    display: block;
+}
+
+.photo-card.missing .media-fallback,
+.profile.missing .profile-fallback {
+    display: grid;
+}
+
+.photo-card.missing img,
+.profile.missing img {
+    display: none;
+}
+
+.media-fallback,
+.profile-fallback {
+    display: none;
+    place-items: center;
+    text-align: center;
+    background: linear-gradient(135deg, #ffd6de, #fff1f4);
+    color: #9f3d58;
+}
+
+.media-fallback {
+    min-height: 220px;
+    padding: 16px;
+    border-radius: 16px;
+    border: 2px dashed rgba(159, 61, 88, 0.25);
+}
+
+.photo-card .media-fallback {
+    min-height: 250px;
+}
+
+.video-frame {
+    background: #fff6f8;
+}
+
+.profile {
+    width: 44px;
+    height: 44px;
+    margin-right: 10px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.profile img,
+.profile-fallback {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+.profile-fallback {
+    font-weight: bold;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.chat-container {
+    width: min(100%, 380px);
+    margin: 0 auto 16px;
+    background: #ece5dd;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 10px 24px rgba(7, 94, 84, 0.2);
+}
+
+.chat-header {
+    background: #075e54;
+    color: white;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+}
+
+.chat-box {
+    padding: 12px;
+    height: 300px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    background:
+        linear-gradient(rgba(236, 229, 221, 0.94), rgba(236, 229, 221, 0.94)),
+        repeating-linear-gradient(
+            45deg,
+            rgba(255, 255, 255, 0.45),
+            rgba(255, 255, 255, 0.45) 12px,
+            rgba(255, 255, 255, 0.2) 12px,
+            rgba(255, 255, 255, 0.2) 24px
+        );
+}
+
+.message {
+    padding: 10px 12px;
+    margin: 6px 0;
+    border-radius: 14px;
+    max-width: 72%;
+    line-height: 1.35;
+}
+
+.left {
+    background: white;
+    align-self: flex-start;
+}
+
+.right {
+    background: #dcf8c6;
+    align-self: flex-end;
+}
+
+.tick {
+    font-size: 10px;
+}
+
+#typing {
+    display: none;
+    padding: 0 12px 12px;
+    font-size: 12px;
+    color: #6c6c6c;
+}
+
+button {
+    padding: 12px 18px;
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    font-size: 0.98rem;
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+button:hover {
+    background: var(--accent-dark);
+    transform: translateY(-1px);
+}
+
+#sorpresa {
+    display: none;
+    margin-top: 16px;
+}
+
+.audio-player,
+.video-player {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.heart {
+    position: fixed;
+    top: -40px;
+    width: 28px;
+    height: 28px;
+    opacity: 0.85;
+    pointer-events: none;
+    animation: fall 7s linear forwards;
+    z-index: 0;
+    transform: rotate(-45deg);
+}
+
+.heart::before,
+.heart::after {
+    content: "";
+    position: absolute;
+    width: 28px;
+    height: 28px;
+    background: inherit;
+    border-radius: 50%;
+}
+
+.heart::before {
+    top: -14px;
+    left: 0;
+}
+
+.heart::after {
+    top: 0;
+    left: 14px;
+}
+
+@keyframes fall {
+    0% {
+        transform: translateY(-100px) rotate(0deg);
+    }
+    100% {
+        transform: translateY(110vh) rotate(25deg);
+    }
+}
+
+@keyframes deslizarGaleria {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(calc(-50% - 8px));
+    }
+}
+
+@media (max-width: 640px) {
+    main {
+        width: min(100%, calc(100% - 20px));
+        padding-top: 20px;
+    }
+
+    .card,
+    .hero {
+        padding: 18px;
+    }
+
+    .message {
+        max-width: 82%;
+    }
+
+    .photo-card {
+        width: 170px;
+        flex-basis: 170px;
+    }
+
+    .photo-card .media-fallback {
+        min-height: 190px;
+    }
+}
+</style>
+</head>
+
+<body>
+<main>
+    <section class="card hero">
+        <h1>Feliz Aniversario ❤️ Felices 7 meses</h1>
+        <p>Muchas gracias por compartir un pedacito de tu vida conmigo, por hacerme reír, por escucharme siempre, por estar ahí conmigo, en definitiva... gracias por cruzarte en mi camino. ❤️</p>
+    </section>
+
+    <section class="card">
+        <h2>Fotos 📸</h2>
+        <div class="gallery">
+            <div class="gallery-viewport">
+                <div class="gallery-track" id="gallery-track"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="card">
+        <h2>Video 🎥</h2>
+        <video class="video-player video-frame" controls>
+            <source src="video-web.mp4" type="video/mp4">
+            <source src="video.MP4" type="video/mp4">
+            Tu navegador no puede reproducir este video.
+        </video>
+        <p class="note">La página intentará usar primero video-web.mp4 y, si no funciona, usará video.MP4.</p>
+    </section>
+
+    <section class="card">
+        <h2>Nuestra canción 🎵</h2>
+        <audio class="audio-player" controls>
+            <source src="Eden Muñoz - La Magia de Conectar.mp3" type="audio/mpeg">
+            Tu navegador no puede reproducir este audio.
+        </audio>
+        <p class="note">La canción cargada actualmente es Eden Muñoz - La Magia de Conectar.mp3.</p>
+    </section>
+
+    <section class="card">
+        <h2>💬 Nuestro chat</h2>
+
+        <div class="chat-container">
+            <div class="chat-header">
+                <div class="profile">
+                    <img src="perfil.jpg" alt="Foto de perfil" onerror="mostrarPlaceholderPerfil(this)">
+                    <div class="profile-fallback">A</div>
+                </div>
+                <span>Mi amor ❤️</span>
+            </div>
+
+            <div class="chat-box" id="chat"></div>
+            <div id="typing">escribiendo...</div>
+        </div>
+
+        <button type="button" onclick="iniciarChat()">Ver chat 💬</button>
+    </section>
+
+    <section class="card">
+        <h2>💖 Sorpresa</h2>
+        <button type="button" onclick="mostrarSorpresa()">Abrir 💌</button>
+
+        <div id="sorpresa">
+            <p>Te amo muchísimo ❤️ eres mi todo 💕</p>
+            <img class="surprise-image" src="4.jpg" alt="Sorpresa especial" onerror="this.style.display='none'; document.getElementById('fallback-sorpresa').style.display='grid';">
+            <div class="media-fallback" id="fallback-sorpresa" style="display: none; margin-top: 12px;">Agrega 4.jpg a esta carpeta para completar la sorpresa.</div>
+        </div>
+    </section>
+</main>
+
+<audio id="sonido" preload="auto">
+    <source src="mensaje.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const fotos = [
+    { src: "foto1.jpg.JPEG", alt: "Foto 1" },
+    { src: "foto2.jpg.JPEG", alt: "Foto 2" },
+    { src: "foto3.jpg.JPEG", alt: "Foto 3" },
+    { src: "foto4.jpg.JPEG", alt: "Foto 4" },
+    { src: "foto5.jpg.JPEG", alt: "Foto 5" },
+    { src: "foto6.jpg.JPEG", alt: "Foto 6" },
+    { src: "foto7.jpg.JPEG", alt: "Foto 7" },
+    { src: "foto8.jpg.JPEG", alt: "Foto 8" },
+    { src: "foto9.jpg.JPEG", alt: "Foto 9" },
+    { src: "foto10.jpg.JPEG", alt: "Foto 10" },
+    { src: "foto11.jpg.JPEG", alt: "Foto 11" },
+    { src: "foto12.jpg.JPEG", alt: "Foto 12" },
+    { src: "foto13.jpg.JPEG", alt: "Foto 13" }
+];
+
+const mensajes = [
+    { texto: "Hola amor ❤️", tipo: "left" },
+    { texto: "Holiii 😍", tipo: "right" },
+    { texto: "Eres lo mejor de mi vida 💕", tipo: "left" },
+    { texto: "Yo te amo muchísimo 🥺", tipo: "right" },
+    { texto: "Feliz aniversario ❤️", tipo: "left" },
+    { texto: "Siempre juntos 💖", tipo: "right" }
+];
+
+const coloresCorazon = ["#f6df72", "#d8e85f", "#a8d672", "#7fbe5c", "#d4c94f"];
+
+let chatEnCurso = false;
+
+function renderizarGaleria() {
+    const track = document.getElementById("gallery-track");
+
+    if (!track) {
+        return;
+    }
+
+    const fotosEnBucle = fotos.concat(fotos);
+
+    fotosEnBucle.forEach((foto, index) => {
+        const tarjeta = document.createElement("figure");
+        tarjeta.className = "photo-card";
+        tarjeta.innerHTML = [
+            "<img src=\"" + foto.src + "\" alt=\"" + foto.alt + "\" onerror=\"mostrarPlaceholderFoto(this)\">",
+            "<div class=\"media-fallback\">Agrega " + foto.src + " a esta carpeta para mostrar esta imagen.</div>"
+        ].join("");
+
+        if (index >= fotos.length) {
+            tarjeta.setAttribute("aria-hidden", "true");
+        }
+
+        track.appendChild(tarjeta);
+    });
+}
+
+function mostrarPlaceholderFoto(imagen) {
+    imagen.closest(".photo-card").classList.add("missing");
+}
+
+function mostrarPlaceholderPerfil(imagen) {
+    imagen.closest(".profile").classList.add("missing");
+}
+
+function iniciarChat() {
+    if (chatEnCurso) {
+        return;
+    }
+
+    const chat = document.getElementById("chat");
+    const typing = document.getElementById("typing");
+    const sonido = document.getElementById("sonido");
+
+    chatEnCurso = true;
+    chat.innerHTML = "";
+    let i = 0;
+
+    function mostrar() {
+        if (i >= mensajes.length) {
+            typing.style.display = "none";
+            chatEnCurso = false;
+            return;
+        }
+
+        typing.style.display = "block";
+
+        setTimeout(() => {
+            typing.style.display = "none";
+
+            const msg = document.createElement("div");
+            msg.className = "message " + mensajes[i].tipo;
+            msg.innerHTML = mensajes[i].texto;
+
+            if (mensajes[i].tipo === "right") {
+                msg.innerHTML += " <span class='tick'>✓✓</span>";
+            }
+
+            chat.appendChild(msg);
+            chat.scrollTop = chat.scrollHeight;
+
+            if (sonido) {
+                sonido.currentTime = 0;
+                sonido.play().catch(() => {});
+            }
+
+            i += 1;
+            setTimeout(mostrar, 1500);
+        }, 1200);
+    }
+
+    mostrar();
+}
+
+function mostrarSorpresa() {
+    document.getElementById("sorpresa").style.display = "block";
+}
+
+function crearCorazon() {
+    const corazon = document.createElement("div");
+    corazon.className = "heart";
+    corazon.style.background = coloresCorazon[Math.floor(Math.random() * coloresCorazon.length)];
+    corazon.style.left = Math.random() * 100 + "vw";
+    corazon.style.animationDuration = 5 + Math.random() * 3 + "s";
+    document.body.appendChild(corazon);
+    setTimeout(() => corazon.remove(), 8500);
+}
+
+renderizarGaleria();
+setInterval(crearCorazon, 220);
+</script>
+</body>
+</html>
